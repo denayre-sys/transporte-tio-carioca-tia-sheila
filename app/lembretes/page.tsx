@@ -60,10 +60,10 @@ export default function LembretesPage() {
 
   function ItemCobranca({ m }: { m: any }) {
     return (
-      <li className="flex items-center justify-between text-sm border-b border-line/60 py-2 last:border-0">
+      <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-base border-b border-line/60 py-3 last:border-0">
         <div>
-          <p className="font-medium">{m.aluno.nome}</p>
-          <p className="text-ink/50 text-xs">
+          <p className="font-medium text-lg">{m.aluno.nome}</p>
+          <p className="text-ink/50 text-sm">
             {formatarData(m.vencimento)} · {formatarMoeda(m.valor)}
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function LembretesPage() {
               atrasado: m.status === "ATRASADO",
             })
           )}
-          className="bg-moss text-white text-xs rounded-lg px-3 py-1.5 hover:bg-moss2 whitespace-nowrap"
+          className="bg-moss text-white text-center text-base rounded-lg px-4 py-3 hover:bg-moss2 active:bg-moss2 whitespace-nowrap"
         >
           Enviar lembrete
         </a>
@@ -90,10 +90,10 @@ export default function LembretesPage() {
 
   function ItemAniversario({ a }: { a: any }) {
     return (
-      <li className="flex items-center justify-between text-sm border-b border-line/60 py-2 last:border-0">
+      <li className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-base border-b border-line/60 py-3 last:border-0">
         <div>
-          <p className="font-medium">{a.nome}</p>
-          <p className="text-ink/50 text-xs">{formatarData(a.dataNascimento).slice(0, 5)}</p>
+          <p className="font-medium text-lg">{a.nome}</p>
+          <p className="text-ink/50 text-sm">{formatarData(a.dataNascimento).slice(0, 5)}</p>
         </div>
         <a
           target="_blank"
@@ -102,7 +102,7 @@ export default function LembretesPage() {
             a.responsavel.whatsapp,
             mensagemAniversario({ nomeResponsavel: a.responsavel.nome, nomeAluno: a.nome })
           )}
-          className="bg-clay text-white text-xs rounded-lg px-3 py-1.5 hover:opacity-90 whitespace-nowrap"
+          className="bg-clay text-white text-center text-base rounded-lg px-4 py-3 hover:opacity-90 active:opacity-90 whitespace-nowrap"
         >
           Enviar parabéns
         </a>
@@ -114,9 +114,9 @@ export default function LembretesPage() {
 
   return (
     <div>
-      <h1 className="font-display text-3xl text-ink mb-1">Lembretes</h1>
-      <p className="text-ink/60 mb-6">
-        Clique em cada botão para abrir o WhatsApp com a mensagem já pronta para envio.
+      <h1 className="font-display text-2xl md:text-3xl text-ink mb-1">Lembretes</h1>
+      <p className="text-ink/60 mb-6 text-base">
+        Toque em cada botão para abrir o WhatsApp com a mensagem já pronta para envio.
       </p>
 
       <Bloco titulo="Vencendo hoje" vazio={vencendoHoje.length === 0}>

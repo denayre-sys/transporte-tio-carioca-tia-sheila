@@ -52,7 +52,30 @@ export default function ResponsaveisPage() {
         </button>
       </form>
 
-      <div className="bg-white rounded-card border border-line overflow-x-auto">
+      {/* Lista em cartões — celular */}
+      <div className="md:hidden space-y-3">
+        {carregando && <p className="text-ink/50 text-center py-6">Carregando...</p>}
+        {!carregando && lista.length === 0 && (
+          <p className="text-ink/50 text-center py-6">Nenhum responsável encontrado.</p>
+        )}
+        {lista.map((r) => (
+          <Link
+            key={r.id}
+            href={`/responsaveis/${r.id}`}
+            className="block bg-white rounded-card border border-line p-4 active:bg-mist"
+          >
+            <p className="font-semibold text-lg text-ink mb-1">{r.nome}</p>
+            <p className="text-base text-ink/70 mb-1">📱 {r.whatsapp}</p>
+            <p className="text-base text-ink/70 mb-1">{r.email || "Sem e-mail cadastrado"}</p>
+            <p className="text-base text-ink/70">
+              {r._count?.alunos ?? 0} aluno{(r._count?.alunos ?? 0) === 1 ? "" : "s"} vinculado(s)
+            </p>
+          </Link>
+        ))}
+      </div>
+
+      {/* Tabela — telas maiores */}
+      <div className="hidden md:block bg-white rounded-card border border-line overflow-x-auto">
         <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-mist text-ink/70 text-left">
             <tr>

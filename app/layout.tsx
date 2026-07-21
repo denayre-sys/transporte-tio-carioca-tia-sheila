@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {sessao ? (
           <div className="flex">
             <Sidebar />
-            <main className="flex-1 min-h-screen p-4 pb-24 pt-16 md:p-10 md:pb-10 md:pt-10 max-w-6xl">{children}</main>
+            <main className="flex-1 min-h-screen w-full max-w-full overflow-x-hidden p-4 pb-28 pt-20 md:p-10 md:pb-10 md:pt-10 md:max-w-6xl">{children}</main>
           </div>
         ) : (
           children

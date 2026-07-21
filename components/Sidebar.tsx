@@ -63,18 +63,18 @@ export default function Sidebar() {
       </aside>
 
       {/* Cabeçalho — só no celular */}
-      <header className="md:hidden fixed top-0 left-0 right-0 z-30 bg-moss2 text-paper px-4 py-3 flex items-center justify-between">
+      <header className="md:hidden safe-top fixed top-0 left-0 right-0 z-30 bg-moss2 text-paper px-4 pt-3 pb-3 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-base leading-tight">{APP_NAME}</h1>
-          <p className="text-[11px] text-paper/60">Transporte Escolar</p>
+          <h1 className="font-display text-lg leading-tight">{APP_NAME}</h1>
+          <p className="text-sm text-paper/70">Transporte Escolar</p>
         </div>
-        <button onClick={sair} className="text-xs text-paper/70 px-2 py-1">
+        <button onClick={sair} className="text-sm text-paper/80 px-3 py-2 rounded-lg active:bg-white/10">
           ⏻ Sair
         </button>
       </header>
 
       {/* Menu de baixo — só no celular */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-line flex items-stretch">
+      <nav className="md:hidden safe-bottom fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-line flex items-stretch">
         {principaisMobile.map((href) => {
           const item = itens.find((i) => i.href === href)!;
           const ativo = pathname === href;
@@ -82,11 +82,11 @@ export default function Sidebar() {
             <Link
               key={href}
               href={href}
-              className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2 text-[11px] ${
-                ativo ? "text-moss2 font-medium" : "text-ink/50"
+              className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 min-h-[60px] text-[13px] ${
+                ativo ? "text-moss2 font-semibold" : "text-ink/60"
               }`}
             >
-              <span className="text-base" aria-hidden>
+              <span className="text-2xl" aria-hidden>
                 {item.icone}
               </span>
               {item.label}
@@ -95,11 +95,11 @@ export default function Sidebar() {
         })}
         <button
           onClick={() => setMaisAberto(true)}
-          className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2 text-[11px] ${
-            maisAberto ? "text-moss2 font-medium" : "text-ink/50"
+          className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 min-h-[60px] text-[13px] ${
+            maisAberto ? "text-moss2 font-semibold" : "text-ink/60"
           }`}
         >
-          <span className="text-base" aria-hidden>
+          <span className="text-2xl" aria-hidden>
             ☰
           </span>
           Mais
@@ -113,7 +113,7 @@ export default function Sidebar() {
           onClick={() => setMaisAberto(false)}
         >
           <div
-            className="bg-white w-full rounded-t-2xl p-4 pb-8 max-h-[70vh] overflow-y-auto"
+            className="bg-white w-full rounded-t-2xl p-4 pb-8 safe-bottom max-h-[70vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="w-10 h-1 bg-line rounded-full mx-auto mb-4" />
@@ -125,11 +125,11 @@ export default function Sidebar() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMaisAberto(false)}
-                    className={`flex flex-col items-center justify-center gap-1.5 py-4 rounded-xl border text-xs ${
+                    className={`flex flex-col items-center justify-center gap-1.5 py-5 min-h-[84px] rounded-xl border text-sm ${
                       pathname === item.href ? "border-moss bg-moss/10 text-moss2" : "border-line text-ink/70"
                     }`}
                   >
-                    <span className="text-xl" aria-hidden>
+                    <span className="text-2xl" aria-hidden>
                       {item.icone}
                     </span>
                     {item.label}

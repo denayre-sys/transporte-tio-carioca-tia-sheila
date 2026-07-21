@@ -140,7 +140,62 @@ export default function FinanceiroPage() {
         />
       </div>
 
-      <div className="bg-white rounded-card border border-line overflow-x-auto">
+      {/* Lista em cartões — celular */}
+      <div className="md:hidden space-y-3">
+        {carregando && <p className="text-ink/50 text-center py-6">Carregando...</p>}
+        {!carregando && mensalidadesFiltradas.length === 0 && (
+          <p className="text-ink/50 text-center py-6">
+            Nenhuma cobrança encontrada. Toque em &quot;Gerar cobranças do mês&quot; acima se ainda não gerou.
+          </p>
+        )}
+        {mensalidadesFiltradas.map((m) => (
+          <div key={m.id} className="bg-white rounded-card border border-line p-4">
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <p className="font-semibold text-lg text-ink">{m.aluno.nome}</p>
+              <span className={`shrink-0 px-2.5 py-1 rounded-full text-sm ${statusEstilo[m.status]}`}>
+                {m.status}
+              </span>
+            </div>
+            <p className="text-base text-ink/70 mb-1">Vence em {formatarData(m.vencimento)}</p>
+            <p className="text-base text-ink font-medium mb-1">{formatarMoeda(m.valor)}</p>
+            {m.dataPagamento && (
+              <p className="text-base text-ink/60 mb-2">
+                Pago em {formatarData(m.dataPagamento)} {m.formaPagamento ? `— ${m.formaPagamento}` : ""}
+              </p>
+            )}
+            <div className="flex gap-2 mt-3">
+              {m.status !== "PAGO" && (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={linkWhatsapp(
+                    m.aluno.responsavel.whatsapp,
+                    mensagemCobranca({
+                      nomeResponsavel: m.aluno.responsavel.nome,
+                      nomeAluno: m.aluno.nome,
+                      valor: formatarMoeda(m.valor),
+                      vencimento: formatarData(m.vencimento),
+                      atrasado: m.status === "ATRASADO",
+                    })
+                  )}
+                  className="flex-1 text-center bg-moss/10 text-moss2 rounded-lg py-3 text-base font-medium active:bg-moss/20"
+                >
+                  WhatsApp
+                </a>
+              )}
+              <button
+                onClick={() => setEditando(m)}
+                className="flex-1 border border-line rounded-lg py-3 text-base font-medium active:bg-mist"
+              >
+                Editar
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tabela — telas maiores */}
+      <div className="hidden md:block bg-white rounded-card border border-line overflow-x-auto">
         <table className="w-full text-sm min-w-[720px]">
           <thead className="bg-mist text-ink/70 text-left">
             <tr>

@@ -13,14 +13,31 @@ body {
   margin: 0;
   background: #F7F5EF;
   color: #1F2A24;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+html {
+  /* Aumenta a base de tudo (textos, espaçamentos, botões) em ~12%,
+     já que quem usa o app não tem tanta intimidade com telas pequenas. */
+  font-size: 112.5%;
 }
 
 body {
   font-family: 'Inter', sans-serif;
+  -webkit-text-size-adjust: 100%;
 }
 
 h1, h2, h3 {
   font-family: 'Fraunces', serif;
+}
+
+/* Área segura do iPhone (notch / barra inferior) quando instalado como app */
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 ::selection {

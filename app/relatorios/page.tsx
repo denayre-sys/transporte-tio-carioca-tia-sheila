@@ -224,43 +224,63 @@ export default function RelatoriosPage() {
       </div>
 
       {relatorioAberto && (
-        <div className="bg-white rounded-card border border-line p-4 mt-6 overflow-x-auto">
+        <div className="bg-white rounded-card border border-line p-4 mt-6">
           <div className="flex items-center justify-between mb-3 gap-2">
             <h2 className="font-display text-lg">{relatorioAberto.titulo}</h2>
-            <span className="text-xs text-ink/50 whitespace-nowrap">{dados.length} registro(s)</span>
+            <span className="text-sm text-ink/50 whitespace-nowrap">{dados.length} registro(s)</span>
           </div>
           {carregando ? (
             <p className="text-ink/50 text-sm">Carregando...</p>
           ) : (
-            <table className="w-full text-sm min-w-[560px]">
-              <thead className="bg-mist text-ink/70 text-left">
-                <tr>
-                  {relatorioAberto.colunas.map((c) => (
-                    <th key={c.chave} className="px-3 py-2">
-                      {c.rotulo}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {dados.length === 0 && (
-                  <tr>
-                    <td colSpan={relatorioAberto.colunas.length} className="px-3 py-4 text-ink/50">
-                      Nenhum registro encontrado.
-                    </td>
-                  </tr>
-                )}
+            <>
+              {/* Cartões — celular */}
+              <div className="md:hidden space-y-3">
+                {dados.length === 0 && <p className="text-ink/50 text-base py-2">Nenhum registro encontrado.</p>}
                 {dados.map((linha, i) => (
-                  <tr key={i} className="border-t border-line/60">
+                  <div key={i} className="border border-line/70 rounded-lg p-3">
                     {relatorioAberto.colunas.map((c) => (
-                      <td key={c.chave} className="px-3 py-2 text-ink/80">
-                        {formatarValor(linha[c.chave], c.tipo)}
-                      </td>
+                      <div key={c.chave} className="flex justify-between gap-3 text-base py-1 border-b border-line/40 last:border-0">
+                        <span className="text-ink/50">{c.rotulo}</span>
+                        <span className="text-ink text-right">{formatarValor(linha[c.chave], c.tipo)}</span>
+                      </div>
                     ))}
-                  </tr>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+
+              {/* Tabela — telas maiores */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full text-sm min-w-[560px]">
+                  <thead className="bg-mist text-ink/70 text-left">
+                    <tr>
+                      {relatorioAberto.colunas.map((c) => (
+                        <th key={c.chave} className="px-3 py-2">
+                          {c.rotulo}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dados.length === 0 && (
+                      <tr>
+                        <td colSpan={relatorioAberto.colunas.length} className="px-3 py-4 text-ink/50">
+                          Nenhum registro encontrado.
+                        </td>
+                      </tr>
+                    )}
+                    {dados.map((linha, i) => (
+                      <tr key={i} className="border-t border-line/60">
+                        {relatorioAberto.colunas.map((c) => (
+                          <td key={c.chave} className="px-3 py-2 text-ink/80">
+                            {formatarValor(linha[c.chave], c.tipo)}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </div>
       )}

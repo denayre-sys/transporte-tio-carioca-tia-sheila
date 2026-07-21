@@ -68,7 +68,37 @@ export default function AlunosPage() {
         </select>
       </div>
 
-      <div className="bg-white rounded-card border border-line overflow-x-auto">
+      {/* Lista em cartões — celular */}
+      <div className="md:hidden space-y-3">
+        {carregando && <p className="text-ink/50 text-center py-6">Carregando...</p>}
+        {!carregando && alunos.length === 0 && (
+          <p className="text-ink/50 text-center py-6">Nenhum aluno encontrado.</p>
+        )}
+        {alunos.map((a) => (
+          <Link
+            key={a.id}
+            href={`/alunos/${a.id}`}
+            className="block bg-white rounded-card border border-line p-4 active:bg-mist"
+          >
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <p className="font-semibold text-lg text-ink">{a.nome}</p>
+              <span
+                className={`shrink-0 px-2.5 py-1 rounded-full text-sm ${
+                  a.status === "ATIVO" ? "bg-moss/10 text-moss2" : "bg-ink/10 text-ink/50"
+                }`}
+              >
+                {a.status === "ATIVO" ? "Ativo" : "Inativo"}
+              </span>
+            </div>
+            <p className="text-base text-ink/70 mb-1">{a.escola || "Sem escola cadastrada"}</p>
+            <p className="text-base text-ink/70 mb-1">Responsável: {a.responsavel?.nome}</p>
+            <p className="text-base text-ink font-medium">{formatarMoeda(a.valorMensalidade)} / mês</p>
+          </Link>
+        ))}
+      </div>
+
+      {/* Tabela — telas maiores */}
+      <div className="hidden md:block bg-white rounded-card border border-line overflow-x-auto">
         <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-mist text-ink/70 text-left">
             <tr>
