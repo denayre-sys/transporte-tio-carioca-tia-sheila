@@ -6,14 +6,14 @@ import { useState } from "react";
 import { APP_NAME } from "@/lib/config";
 
 const itens = [
-  { href: "/", label: "Painel", icone: "🚐" },
-  { href: "/responsaveis", label: "Responsáveis", icone: "👪" },
-  { href: "/alunos", label: "Alunos", icone: "🎒" },
-  { href: "/financeiro", label: "Financeiro", icone: "💳" },
-  { href: "/rota", label: "Rota do Dia", icone: "🗺️" },
-  { href: "/relatorios", label: "Relatórios", icone: "📄" },
-  { href: "/lembretes", label: "Lembretes", icone: "💬" },
-  { href: "/configuracoes", label: "Configurações", icone: "⚙️" },
+  { href: "/", label: "Painel", labelCurto: "Painel", icone: "🚐" },
+  { href: "/responsaveis", label: "Responsáveis", labelCurto: "Resp.", icone: "👪" },
+  { href: "/alunos", label: "Alunos", labelCurto: "Alunos", icone: "🎒" },
+  { href: "/financeiro", label: "Financeiro", labelCurto: "Financ.", icone: "💳" },
+  { href: "/rota", label: "Rota do Dia", labelCurto: "Rota", icone: "🗺️" },
+  { href: "/relatorios", label: "Relatórios", labelCurto: "Relat.", icone: "📄" },
+  { href: "/lembretes", label: "Lembretes", labelCurto: "Lembr.", icone: "💬" },
+  { href: "/configuracoes", label: "Configurações", labelCurto: "Config.", icone: "⚙️" },
 ];
 
 const principaisMobile = ["/", "/responsaveis", "/alunos", "/financeiro"];
@@ -74,7 +74,7 @@ export default function Sidebar() {
       </header>
 
       {/* Menu de baixo — só no celular */}
-      <nav className="md:hidden safe-bottom fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-line flex items-stretch">
+      <nav className="md:hidden safe-bottom fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-line grid grid-cols-5 w-full overflow-hidden">
         {principaisMobile.map((href) => {
           const item = itens.find((i) => i.href === href)!;
           const ativo = pathname === href;
@@ -82,24 +82,24 @@ export default function Sidebar() {
             <Link
               key={href}
               href={href}
-              className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 min-h-[60px] text-[13px] ${
+              className={`flex flex-col items-center justify-center gap-0.5 py-2.5 min-h-[58px] text-[11px] leading-tight text-center px-0.5 truncate w-full ${
                 ativo ? "text-moss2 font-semibold" : "text-ink/60"
               }`}
             >
-              <span className="text-2xl" aria-hidden>
+              <span className="text-xl" aria-hidden>
                 {item.icone}
               </span>
-              {item.label}
+              <span className="truncate w-full">{item.labelCurto || item.label}</span>
             </Link>
           );
         })}
         <button
           onClick={() => setMaisAberto(true)}
-          className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 min-h-[60px] text-[13px] ${
+          className={`flex flex-col items-center justify-center gap-0.5 py-2.5 min-h-[58px] text-[11px] leading-tight w-full ${
             maisAberto ? "text-moss2 font-semibold" : "text-ink/60"
           }`}
         >
-          <span className="text-2xl" aria-hidden>
+          <span className="text-xl" aria-hidden>
             ☰
           </span>
           Mais

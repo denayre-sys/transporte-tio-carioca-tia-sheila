@@ -13,9 +13,9 @@ const statusEstilo: Record<string, string> = {
 
 function Cartao({ label, valor, cor }: { label: string; valor: string; cor: string }) {
   return (
-    <div className="bg-white rounded-card border border-line p-4 md:p-5 min-w-0">
-      <p className="text-xs md:text-sm text-ink/60 mb-1">{label}</p>
-      <p className={`text-lg md:text-2xl font-display break-words ${cor}`}>{valor}</p>
+    <div className="bg-white rounded-card border border-line p-3 md:p-5 min-w-0">
+      <p className="text-xs text-ink/60 mb-0.5">{label}</p>
+      <p className={`text-base md:text-2xl font-display break-words ${cor}`}>{valor}</p>
     </div>
   );
 }
@@ -149,21 +149,22 @@ export default function FinanceiroPage() {
           </p>
         )}
         {mensalidadesFiltradas.map((m) => (
-          <div key={m.id} className="bg-white rounded-card border border-line p-4">
-            <div className="flex items-start justify-between gap-3 mb-2">
-              <p className="font-semibold text-lg text-ink">{m.aluno.nome}</p>
-              <span className={`shrink-0 px-2.5 py-1 rounded-full text-sm ${statusEstilo[m.status]}`}>
+          <div key={m.id} className="bg-white rounded-card border border-line p-3">
+            <div className="flex items-start justify-between gap-2 mb-1">
+              <p className="font-semibold text-base text-ink leading-snug">{m.aluno.nome}</p>
+              <span className={`shrink-0 px-2 py-0.5 rounded-full text-xs ${statusEstilo[m.status]}`}>
                 {m.status}
               </span>
             </div>
-            <p className="text-base text-ink/70 mb-1">Vence em {formatarData(m.vencimento)}</p>
-            <p className="text-base text-ink font-medium mb-1">{formatarMoeda(m.valor)}</p>
+            <p className="text-sm text-ink/70 leading-snug">
+              Vence {formatarData(m.vencimento)} · <span className="text-ink font-medium">{formatarMoeda(m.valor)}</span>
+            </p>
             {m.dataPagamento && (
-              <p className="text-base text-ink/60 mb-2">
+              <p className="text-sm text-ink/60 leading-snug">
                 Pago em {formatarData(m.dataPagamento)} {m.formaPagamento ? `— ${m.formaPagamento}` : ""}
               </p>
             )}
-            <div className="flex gap-2 mt-3">
+            <div className="flex gap-2 mt-2.5">
               {m.status !== "PAGO" && (
                 <a
                   target="_blank"
@@ -178,14 +179,14 @@ export default function FinanceiroPage() {
                       atrasado: m.status === "ATRASADO",
                     })
                   )}
-                  className="flex-1 text-center bg-moss/10 text-moss2 rounded-lg py-3 text-base font-medium active:bg-moss/20"
+                  className="flex-1 text-center bg-moss/10 text-moss2 rounded-lg py-2 text-sm font-medium active:bg-moss/20"
                 >
                   WhatsApp
                 </a>
               )}
               <button
                 onClick={() => setEditando(m)}
-                className="flex-1 border border-line rounded-lg py-3 text-base font-medium active:bg-mist"
+                className="flex-1 border border-line rounded-lg py-2 text-sm font-medium active:bg-mist"
               >
                 Editar
               </button>
