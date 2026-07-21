@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusAluno {
+  ATIVO
+  INATIVO
+}
+
+enum TipoTransporte {
+  IDA_E_VOLTA
+  SO_IDA
+  SO_VOLTA
+}
+
+enum StatusMensalidade {
+  PAGO
+  ABERTO
+  ATRASADO
+  ISENTO
+}
+
+enum StatusRota {
+  PENDENTE
+  VAI
+  NAO_VAI
+}
+
+model RotaItem {
+  id        String     @id @default(cuid())
+  secao     String
+  ordem     Int
+  texto     String
+  status    StatusRota @default(PENDENTE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Responsavel {
+  id        String   @id @default(cuid())
+  nome      String
+  cpf       String?
+  endereco  String?
+  telefone  String?
+  whatsapp  String
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  alunos    Aluno[]
+}
+
+model Aluno {
+  id                String          @id @default(cuid())
+  nome              String
+  fotoUrl           String?
+  dataNascimento    DateTime?
+  escola            String?
+  serie             String?
+  turno             String?
+  itinerarioInicial String?
+  itinerarioFinal   String?
+  tipoTransporte    TipoTransporte?
+  endereco          String?
+  bairro            String?
+  cep               String?
+  telefoneAluno     String?
+  emailAluno        String?
+  valorSemDesconto  Decimal?
+  valorMensalidade  Decimal         @default(0)
+  diaVencimento     Int             @default(10)
+  status            StatusAluno     @default(ATIVO)
+  observacoes       String?
+  responsavelId     String
+  responsavel       Responsavel     @relation(fields: [responsavelId], references: [id])
+  mensalidades      Mensalidade[]
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+model Mensalidade {
+  id              String            @id @default(cuid())
+  alunoId         String
+  aluno           Aluno             @relation(fields: [alunoId], references: [id])
+  mesReferencia   String // formato "AAAA-MM"
+  valor           Decimal
+  vencimento      DateTime
+  dataPagamento   DateTime?
+  formaPagamento  String?
+  desconto        Decimal           @default(0)
+  acrescimo       Decimal           @default(0)
+  multa           Decimal           @default(0)
+  juros           Decimal           @default(0)
+  status          StatusMensalidade @default(ABERTO)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@unique([alunoId, mesReferencia])
+}
+
+model Configuracao {
+  id             String    @id @default(cuid())
+  nomeEmpresa    String    @default("Transporte Escolar Tio Alan")
+  emailAlertas   String?
+  alertasAtivos  Boolean   @default(true)
+  ultimaExecucao DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
