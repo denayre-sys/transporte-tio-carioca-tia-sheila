@@ -1,6 +1,6 @@
-import { APP_NAME } from "@/lib/config";
 "use client";
 
+import { APP_NAME } from "@/lib/config";
 import { useEffect, useState } from "react";
 
 const CORES: Record<string, string> = {
