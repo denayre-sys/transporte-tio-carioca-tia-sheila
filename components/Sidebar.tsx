@@ -7,8 +7,8 @@ import { APP_NAME } from "@/lib/config";
 
 const itens = [
   { href: "/", label: "Painel", icone: "🚐" },
-  { href: "/alunos", label: "Alunos", icone: "🎒" },
   { href: "/responsaveis", label: "Responsáveis", icone: "👪" },
+  { href: "/alunos", label: "Alunos", icone: "🎒" },
   { href: "/financeiro", label: "Financeiro", icone: "💳" },
   { href: "/rota", label: "Rota do Dia", icone: "🗺️" },
   { href: "/relatorios", label: "Relatórios", icone: "📄" },
@@ -16,7 +16,7 @@ const itens = [
   { href: "/configuracoes", label: "Configurações", icone: "⚙️" },
 ];
 
-const principaisMobile = ["/", "/alunos", "/financeiro", "/lembretes"];
+const principaisMobile = ["/", "/responsaveis", "/alunos", "/financeiro"];
 
 export default function Sidebar() {
   const pathname = usePathname();
