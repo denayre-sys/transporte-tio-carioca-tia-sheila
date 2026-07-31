@@ -193,7 +193,10 @@ export default function AlunoForm({ alunoId, inicial }: { alunoId?: string; inic
 
         <div>
           <label className={rotuloClasse}>Dia do vencimento *</label>
-          <input required type="number" min={1} max={28} className={campoClasse} value={dados.diaVencimento} onChange={(e) => campo("diaVencimento", e.target.value)} />
+          <input required type="number" min={1} max={31} className={campoClasse} value={dados.diaVencimento} onChange={(e) => campo("diaVencimento", e.target.value)} />
+          <p className="text-xs text-ink/50 mt-1">
+            Em meses mais curtos (ex: fevereiro), o vencimento cai automaticamente no último dia do mês.
+          </p>
         </div>
 
         <div className="md:col-span-2">

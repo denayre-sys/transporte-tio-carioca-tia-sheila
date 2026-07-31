@@ -15,7 +15,9 @@ export async function POST() {
     });
     if (existe) continue;
 
-    const vencimento = new Date(Date.UTC(ano, mesNum - 1, aluno.diaVencimento || 10));
+    const ultimoDiaDoMes = new Date(Date.UTC(ano, mesNum, 0)).getUTCDate();
+    const dia = Math.min(aluno.diaVencimento || 10, ultimoDiaDoMes);
+    const vencimento = new Date(Date.UTC(ano, mesNum - 1, dia));
 
     await prisma.mensalidade.create({
       data: {
