@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { criarSessao } from "@/lib/auth";
+import { senhaConfere } from "@/lib/acesso";
 
 export async function POST(req: NextRequest) {
   const { senha } = await req.json();
 
-  if (senha !== process.env.APP_SENHA) {
+  if (!(await senhaConfere(senha))) {
     return NextResponse.json({ erro: "Senha incorreta." }, { status: 401 });
   }
 

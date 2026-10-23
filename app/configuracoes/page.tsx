@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import TrocarSenha from "@/components/TrocarSenha";
 
 export default function ConfiguracoesPage() {
   const [config, setConfig] = useState<any>(null);
@@ -123,6 +124,8 @@ export default function ConfiguracoesPage() {
           </button>
         </div>
       </form>
+
+      <TrocarSenha />
     </div>
   );
 }
