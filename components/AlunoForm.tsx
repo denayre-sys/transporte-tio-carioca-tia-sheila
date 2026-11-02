@@ -71,6 +71,14 @@ export default function AlunoForm({ alunoId, inicial }: { alunoId?: string; inic
     });
     setSalvando(false);
     if (res.ok) {
+      if (!alunoId) {
+        const novo = await res.json().catch(() => null);
+        if (novo?.id) {
+          router.push(`/alunos/${novo.id}/contrato?novo=1`);
+          router.refresh();
+          return;
+        }
+      }
       router.push("/alunos");
       router.refresh();
     } else {

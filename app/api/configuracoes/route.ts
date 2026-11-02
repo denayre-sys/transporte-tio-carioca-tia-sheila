@@ -18,6 +18,10 @@ export async function PUT(req: NextRequest) {
       nomeEmpresa: dados.nomeEmpresa,
       emailAlertas: dados.emailAlertas || null,
       alertasAtivos: !!dados.alertasAtivos,
+      contratadaDocumento: dados.contratadaDocumento || null,
+      contratadaEndereco: dados.contratadaEndereco || null,
+      contratadaTelefone: dados.contratadaTelefone || null,
+      cidadeForo: dados.cidadeForo || null,
     },
   });
   return NextResponse.json(config);

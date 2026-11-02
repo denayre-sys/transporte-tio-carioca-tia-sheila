@@ -73,6 +73,46 @@ export default function ConfiguracoesPage() {
           />
         </div>
 
+        <h2 className="font-display text-lg mb-1 mt-6">Dados do transportador (usados no contrato)</h2>
+        <p className="text-xs text-ink/50 mb-4">
+          Aparecem como CONTRATADA no contrato gerado para cada aluno. O nome acima é usado como nome da contratada.
+        </p>
+        <div className="grid sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label className={rotulo}>CPF ou CNPJ</label>
+            <input
+              className={campoClasse}
+              value={config.contratadaDocumento || ""}
+              onChange={(e) => setConfig({ ...config, contratadaDocumento: e.target.value })}
+            />
+          </div>
+          <div>
+            <label className={rotulo}>Telefone / WhatsApp</label>
+            <input
+              className={campoClasse}
+              value={config.contratadaTelefone || ""}
+              onChange={(e) => setConfig({ ...config, contratadaTelefone: e.target.value })}
+            />
+          </div>
+          <div className="sm:col-span-2">
+            <label className={rotulo}>Endereço completo</label>
+            <input
+              className={campoClasse}
+              value={config.contratadaEndereco || ""}
+              onChange={(e) => setConfig({ ...config, contratadaEndereco: e.target.value })}
+            />
+          </div>
+          <div className="sm:col-span-2">
+            <label className={rotulo}>Cidade/UF do foro</label>
+            <input
+              className={campoClasse}
+              placeholder="Ex.: Fortaleza/CE"
+              value={config.cidadeForo || ""}
+              onChange={(e) => setConfig({ ...config, cidadeForo: e.target.value })}
+            />
+          </div>
+        </div>
+
         <h2 className="font-display text-lg mb-1 mt-6">Alertas e notificações</h2>
         <p className="text-xs text-ink/50 mb-4">
           Todo dia às 03:00 da manhã, mesmo com o site fechado, o sistema envia um e-mail com os vencimentos e

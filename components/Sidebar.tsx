@@ -32,7 +32,7 @@ export default function Sidebar() {
   return (
     <>
       {/* Sidebar — visível a partir de telas médias */}
-      <aside className="hidden md:flex w-60 shrink-0 bg-moss2 text-paper flex-col min-h-screen">
+      <aside className="hidden md:flex print:!hidden w-60 shrink-0 bg-moss2 text-paper flex-col min-h-screen">
         <div className="px-6 py-6 border-b border-white/10">
           <h1 className="font-display text-xl leading-tight">{APP_NAME}</h1>
           <p className="text-xs text-paper/60 mt-1">Transporte Escolar</p>
