@@ -26,6 +26,10 @@ function Contrato() {
   const hoje = new Date();
   const [inicio, setInicio] = useState(paraInput(hoje));
   const [fim, setFim] = useState(`${hoje.getFullYear()}-12-31`);
+  const [cpf, setCpf] = useState("");
+  const [endereco, setEndereco] = useState("");
+  const [salvandoResp, setSalvandoResp] = useState(false);
+  const [msgResp, setMsgResp] = useState("");
 
   useEffect(() => {
     Promise.all([fetch(`/api/alunos/${id}`).then((r) => r.json()), fetch("/api/configuracoes").then((r) => r.json())])
@@ -34,6 +38,8 @@ function Contrato() {
         else {
           setAluno(a);
           setConfig(c);
+          setCpf(a.responsavel?.cpf || "");
+          setEndereco(a.responsavel?.endereco || [a.endereco, a.bairro].filter(Boolean).join(", "));
         }
       })
       .catch(() => setErro("Não foi possível carregar os dados do contrato."));
@@ -51,11 +57,31 @@ function Contrato() {
       cidadeForo: config.cidadeForo,
     },
     aluno: { ...aluno, valorMensalidade: Number(aluno.valorMensalidade) },
-    responsavel: aluno.responsavel,
+    responsavel: { ...aluno.responsavel, cpf, endereco },
     inicio: deInput(inicio),
     fim: deInput(fim),
     hoje,
   });
+
+  async function salvarNoCadastro() {
+    setSalvandoResp(true);
+    setMsgResp("");
+    const r = aluno.responsavel;
+    const res = await fetch(`/api/responsaveis/${r.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nome: r.nome,
+        cpf,
+        endereco,
+        telefone: r.telefone,
+        whatsapp: r.whatsapp,
+        email: r.email,
+      }),
+    });
+    setSalvandoResp(false);
+    setMsgResp(res.ok ? "Salvo no cadastro do responsável." : "Não foi possível salvar.");
+  }
 
   const faltaDadosEmpresa = !config.contratadaDocumento || !config.contratadaEndereco || !config.cidadeForo;
   const campoClasse = "border border-line rounded-lg px-3 py-2 text-sm outline-none focus-ring bg-white";
@@ -92,6 +118,36 @@ function Contrato() {
             <label className="block text-sm font-medium mb-1">Fim da vigência</label>
             <input type="date" className={campoClasse} value={fim} onChange={(e) => setFim(e.target.value)} />
           </div>
+        </div>
+
+        <div className="bg-white border border-line rounded-card p-4 mb-4">
+          <h2 className="font-display text-base mb-1">Dados do contratante ({aluno.responsavel?.nome})</h2>
+          <p className="text-xs text-ink/50 mb-3">
+            Preenchidos com o cadastro do responsável. Complete o que faltar; vale para este contrato e você pode salvar no cadastro.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-3 mb-3">
+            <div>
+              <label className="block text-sm font-medium mb-1">CPF</label>
+              <input className={`${campoClasse} w-full`} value={cpf} onChange={(e) => setCpf(e.target.value)} />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-sm font-medium mb-1">Endereço completo</label>
+              <input
+                className={`${campoClasse} w-full`}
+                value={endereco}
+                onChange={(e) => setEndereco(e.target.value)}
+                placeholder="Rua, número, bairro, cidade"
+              />
+            </div>
+          </div>
+          <button
+            onClick={salvarNoCadastro}
+            disabled={salvandoResp}
+            className="px-3 py-1.5 text-sm border border-line rounded-lg bg-white hover:bg-mist disabled:opacity-60"
+          >
+            {salvandoResp ? "Salvando..." : "Salvar no cadastro do responsável"}
+          </button>
+          {msgResp && <span className="ml-3 text-sm text-moss2">{msgResp}</span>}
         </div>
 
         <div className="flex flex-wrap gap-2">
